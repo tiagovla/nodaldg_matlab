@@ -13,7 +13,10 @@ resHx = zeros(Np,K); resHy = zeros(Np,K); resEz = zeros(Np,K);
 rLGL = JacobiGQ(0,0,N); rmin = abs(rLGL(1)-rLGL(2));
 dtscale = dtscale2D; dt = min(dtscale)*rmin*2/3
 
-% outer time step loop 
+% outer time step loop
+% figure;
+% T = delaunay(x,y);
+
 while (time<FinalTime)
   
   if(time+dt>FinalTime), dt = FinalTime-time; end
@@ -31,6 +34,9 @@ while (time<FinalTime)
       Hx = Hx+rk4b(INTRK)*resHx; Hy = Hy+rk4b(INTRK)*resHy; Ez = Ez+rk4b(INTRK)*resEz;        
    end;
    % Increment time
+%    trisurf(T,x,y,abs(Ez))
+%    axis([-1, 1, -1, 1, -1 ,1])
+%    drawnow
    time = time+dt;
 end
 return

@@ -4,6 +4,9 @@ function [rhsHx, rhsHy, rhsEz] = MaxwellRHS2D(Hx,Hy,Ez)
 % Purpose  : Evaluate RHS flux in 2D Maxwell TM form 
 
 Globals2D;
+Hx = reshape((1:numel(Hx))-1, size(Hx));
+Hy = reshape((1:numel(Hy))-1+5, size(Hy));
+Ez = reshape((1:numel(Ez))-1+10, size(Ez));
 
 % Define field differences at faces
 dHx = zeros(Nfp*Nfaces,K); dHx(:) = Hx(vmapM)-Hx(vmapP);
@@ -14,7 +17,7 @@ dEz = zeros(Nfp*Nfaces,K); dEz(:) = Ez(vmapM)-Ez(vmapP);
 dHx(mapB) = 0; dHy(mapB) = 0; dEz(mapB) = 2*Ez(vmapB);
 
 % evaluate upwind fluxes
-alpha = 1.0; 
+alpha = 0.0; 
 ndotdH =  nx.*dHx+ny.*dHy;
 fluxHx =  ny.*dEz + alpha*(ndotdH.*nx-dHx);
 fluxHy = -nx.*dEz + alpha*(ndotdH.*ny-dHy);

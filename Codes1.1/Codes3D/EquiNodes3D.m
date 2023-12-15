@@ -7,7 +7,7 @@ function [X,Y,Z] = EquinNdes3D(N)
 Np = (N+1)*(N+2)*(N+3)/6;
 
 % 2) create equidistributed nodes on equilateral triangle
-X = zeros(Np,1); Y = zeros(Np,1); Z = zeros(Np,1); 
+X = zeros(Np,1); Y = zeros(Np,1); Z = zeros(Np,1);
 
 sk = 1;
 for n=1:N+1

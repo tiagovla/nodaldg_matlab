@@ -16,7 +16,6 @@ frz = rz(Fmask(:), :); fsz = sz(Fmask(:), :); ftz = tz(Fmask(:), :);
 nx = zeros(4*Nfp, K); ny = zeros(4*Nfp, K); nz = zeros(4*Nfp, K);
 fid1 = (1:Nfp)'; fid2 = (Nfp+1:2*Nfp)'; 
 fid3 = (2*Nfp+1:3*Nfp)'; fid4 = (3*Nfp+1:4*Nfp)';
-
 % face 1
 nx(fid1, :) = -ftx(fid1, :); ny(fid1, :) = -fty(fid1, :); nz(fid1, :) = -ftz(fid1, :);
 

@@ -35,7 +35,8 @@ for k1=1:K
     % Compute distance matrix
     D = (x1 -x2').^2 + (y1-y2').^2;
     [idM, idP] = find(sqrt(abs(D))<NODETOL*refd);
-    vmapP(idM,f1,k1) = vidP(idP); mapP(idM,f1,k1) = idP + (f2-1)*Nfp+(k2-1)*Nfaces*Nfp;
+    vmapP(idM,f1,k1) = vidP(idP); 
+    mapP(idM,f1,k1) = idP + (f2-1)*Nfp+(k2-1)*Nfaces*Nfp;
   end
 end
 

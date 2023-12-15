@@ -17,9 +17,12 @@ dt = dtscale3D;  % TW: buggy
 Ntsteps = ceil(FinalTime/dt); dt = FinalTime/Ntsteps;
 
 time = 0; tstep = 1;
-
-while (time<FinalTime) % outer time step loop 
-    
+% figure;
+tic;
+while (time<FinalTime) % outer time step loop
+%   quiver3(x,y,z,Ex,Ey, Ez)
+%   drawnow
+  time  
   for INTRK = 1:5   % inner multi-stage Runge-Kutta loop
     
     % compute right hand side of TM-mode Maxwell's equations
@@ -37,6 +40,7 @@ while (time<FinalTime) % outer time step loop
    time = time+dt;    % Increment time
    tstep = tstep+1;
 end
+toc
 return;
 
 

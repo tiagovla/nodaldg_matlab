@@ -1,10 +1,10 @@
-function [vmapM, vmapP, vmapB, mapB] = BuildMaps3D
+function [vmapM, vmapP, vmapB, mapB] = BuildMaps1D
 
-% function [vmapM, vmapP, vmapB, mapB] = BuildMaps3D
+% function [vmapM, vmapP, vmapB, mapB] = BuildMaps1D
 % Purpose: Connectivity and boundary tables for nodes given in the K # of elements,
 % 	       each with N+1 degrees of freedom.
 
-Globals3D;
+Globals1D;
 
 % number volume nodes consecutively
 nodeids = reshape(1:K*Np, Np, K);
@@ -18,23 +18,19 @@ for k1=1:K
   end
 end
 
-tmp = ones(1,Nfp);
 for k1=1:K
   for f1=1:Nfaces
     % find neighbor
     k2 = EToE(k1,f1); f2 = EToF(k1,f1);
     
-    % find find volume node numbers of left and right nodes 
+    % find volume node numbers of left and right nodes 
     vidM = vmapM(:,f1,k1); vidP = vmapM(:,f2,k2);
     
-    xM = x(vidM)*tmp; yM = y(vidM)*tmp; zM = z(vidM)*tmp;
-    xP = x(vidP)*tmp; yP = y(vidP)*tmp; zP = z(vidP)*tmp;
+    x1  = x(vidM); x2  = x(vidP);
     
     % Compute distance matrix
-    D = (xM -xP').^2 + (yM-yP').^2 + (zM-zP').^2;   
-
-    [idM, idP] = find(abs(D)<NODETOL);
-    vmapP(idM, f1, k1) = vmapM(idP, f2, k2);
+    D = (x1 -x2 ).^2;
+    if (D<NODETOL) vmapP(:,f1,k1) = vidP; end;
   end
 end
 
@@ -42,4 +38,7 @@ vmapP = vmapP(:); vmapM = vmapM(:);
 
 % Create list of boundary nodes
 mapB = find(vmapP==vmapM); vmapB = vmapM(mapB);
+
+% Create specific left (inflow) and right (outflow) maps
+mapI = 1; mapO = K*Nfaces; vmapI = 1; vmapO = K*Np;
 return
